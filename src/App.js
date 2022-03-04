@@ -1,24 +1,171 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [pokemon, setPokemon] = useState("");
+  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
+  const [pokemonType, setPokemonType] = useState("");
+  const [pokemonAbility, setPokemonAbility] = useState([]);
+
+  // Get pokemon list
+  const getPokemonList = async () => {
+    let pokemonArray = [];
+    for (let i = 1; i <= 200; i++)
+      pokemonArray.push(await getPokemonData(i));
+    setPokemonList(pokemonArray);
+  }
+
+  const getPokemonData = async (id) => {
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    return (res.data);
+  }
+
+  useEffect(() => {
+    getPokemonList();
+  }, [])
+
+  // const getPokemonFormList = (pokemonSelection) => {
+  //   return (setPokemon("arbok"))
+  // }
+
+  // Get pokemon when press Enter
+  const handleChange = (e) => {
+    setPokemon(e.target.value.toLowerCase());
+  };
+
+  const getPokemon = async (event) => {
+    const toArray = [];
+    if (event.key === "Enter") {
+      try {
+        const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+        const res = await axios.get(url);
+        const urlAbility = res.data.abilities[0].ability.url;
+        const resAbility = await axios.get(urlAbility);
+        setPokemonAbility(resAbility.data);
+        toArray.push(res.data);
+        setPokemonType(res.data.types[0].type.name);
+        setPokemonData(toArray);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="container">
+      <div className="left-screen">
+        <div className="left-screen__top">
+          <div className="light-container">
+            <div className="light light--blue">
+            </div>
+          </div>
+          <div className="light light--red"></div>
+          <div className="light light--yellow"></div>
+          <div className="light light--green"></div>
+        </div>
+        <div className="left-screen__bottom">
+          <div className="main-screen">
+            <div className="main-screen__top-lights">
+            </div>
+            <div id="display" className="main-screen__display">
+              {pokemonData.map((data) => {
+                return (
+                  <div className="pokemon-image"> <img src={data.sprites["front_default"]} /></div>
+                )
+              })}
+              <div className="search-message">Searching...</div>
+              <div className="not-found-message">Pokemon <br />Not Found</div>
+            </div>
+            <div className="main-screen__speaker-light"></div>
+            <div className="main-screen__speaker">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div className="left-screen__joint">
+          <div className="joint"></div>
+          <div className="joint"></div>
+          <div className="joint"></div>
+          <div className="joint"></div>
+          <div className="joint__reflextion"></div>
+        </div>
+      </div>
+      <div className="right-screen">
+        <div className="right-screen__top">
+          <div></div>
+        </div>
+        <div className="right-screen__bottom">
+          <div className="info-container">
+            <input
+              onChange={handleChange}
+              onKeyPress={getPokemon}
+              id="search"
+              type="text"
+              className="awesomplete info-input"
+              placeholder="Search Pokemon Name or ID"
+              list="mylist"
+            />
+
+            <datalist id="mylist">
+              {pokemonList.map((data) => {
+                return (
+                  <option>{data.name}</option>
+                )
+              })}
+            </datalist>
+            <section className="info-screen">
+              <div id="species" className="info">
+                <div className="label">Name</div>
+                {pokemonData.map((data) => {
+                  return (
+                    <div className="desc">{data.species.name}</div>
+                  )
+                })}
+              </div>
+              <div id="type" className="info">
+                <div className="label">Type</div>
+                {pokemonData.map(() => {
+                  return (
+                    <div className="desc">{pokemonType}</div>
+                  )
+                })}
+              </div>
+              <div id="height" className="info">
+                <div className="label">Height</div>
+                {pokemonData.map((data) => {
+                  return (
+                    <div className="desc">0.{data.height}m</div>
+                  )
+                })}
+              </div>
+              <div id="weight" className="info">
+                <div className="label">Weight</div>
+                {pokemonData.map((data) => {
+                  return (
+                    <div className="desc">{Math.round(data.weight / 4.3)}lbs</div>
+                  )
+                })}
+              </div>
+              {/* <div id="evolution" className="info">
+                <div className="label">Evolution Chain</div>
+                <div className="desc">____</div>
+              </div> */}
+              <div id="bio" className="info">
+                <div className="label">Bio</div>
+                <div className="desc">
+                  {pokemonAbility.effect_entries ? <div className="desc">{pokemonAbility.effect_entries[1].short_effect}</div> : null}
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div >
+    </div >
   );
 }
 
