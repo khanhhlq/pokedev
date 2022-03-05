@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import StaticImages from "./components/StaticImages";
 
 function App() {
   const [pokemon, setPokemon] = useState("");
@@ -53,6 +54,23 @@ function App() {
     }
   };
 
+  const checkData = (pokemonInput) => {
+    let countCheck = 0;
+    pokemonList.map((data) => {
+      if (pokemonInput == data) {
+        countCheck++;
+      }
+      else {
+        countCheck--;
+      }
+    })
+    if (countCheck > 0) {
+      alert("oke");
+    } else {
+      alert("not found")
+    }
+  }
+
   return (
     <div className="container">
       <div className="left-screen">
@@ -70,8 +88,8 @@ function App() {
             <div className="main-screen__top-lights">
             </div>
             <div id="display" className="main-screen__display">
-              {pokemonData[0] ? <div className="pokemon-image"> <img src={pokemonData[0].sprites["front_default"]} /></div> : <div className="pokemon-image-start"> <img /></div>}
-              <div className="search-message">Searching...</div>
+              {pokemonData[0] ? <div className="pokemon-image"> <img src={pokemonData[0].sprites["front_default"]} /></div> : <StaticImages />}
+              {/* <div className="search-message">{checkData(pokemonData[0].species.name)}</div> */}
               <div className="not-found-message">Pokemon <br />Not Found</div>
             </div>
             <div className="main-screen__speaker-light"></div>
@@ -97,18 +115,7 @@ function App() {
         </div>
         <div className="right-screen__bottom">
           <div className="info-container">
-            <input
-              onChange={handleChange}
-              onKeyPress={getPokemon}
-              onKeyUp={getPokemon}
-              onKeyDown={e => e.key === 'Enter' && getPokemon}
-              onPaste={getPokemon}
-              id="search"
-              type="text"
-              className="awesomplete info-input"
-              placeholder="Search Pokemon Name or ID"
-              list="mylist"
-            />
+            <input onChange={handleChange} onKeyPress={getPokemon} id="search" type="text" className="awesomplete info-input" placeholder="Search Pokemon Name" list="mylist" />
             <datalist id="mylist">
               {pokemonList.map((data) => {
                 return (
@@ -143,11 +150,10 @@ function App() {
                 <div className="desc">____</div>
               </div> */}
             </section>
-
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 
