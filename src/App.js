@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import StaticImages from "./components/StaticImages";
 
-function App() {
+const App = () => {
   const [pokemon, setPokemon] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonData, setPokemonData] = useState([]);
@@ -89,7 +89,6 @@ function App() {
             </div>
             <div id="display" className="main-screen__display">
               {pokemonData[0] ? <div className="pokemon-image"> <img src={pokemonData[0].sprites["front_default"]} /></div> : <StaticImages />}
-              {/* <div className="search-message">{checkData(pokemonData[0].species.name)}</div> */}
               <div className="not-found-message">Pokemon <br />Not Found</div>
             </div>
             <div className="main-screen__speaker-light"></div>
