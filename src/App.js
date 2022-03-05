@@ -1,53 +1,53 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import StaticImages from "./components/StaticImages";
+import React, { useEffect } from "react"
+import { useState } from "react"
+import axios from "axios"
+import StaticImages from "./components/StaticImages"
 
 const App = () => {
   // 🎉 Create useState 🎉
-  const [pokemon, setPokemon] = useState("");
-  const [pokemonList, setPokemonList] = useState([]);
-  const [pokemonData, setPokemonData] = useState([]);
-  const [pokemonType, setPokemonType] = useState("");
-  const [pokemonAbility, setPokemonAbility] = useState([]);
+  const [pokemon, setPokemon] = useState("")
+  const [pokemonList, setPokemonList] = useState([])
+  const [pokemonData, setPokemonData] = useState([])
+  const [pokemonType, setPokemonType] = useState("")
+  const [pokemonAbility, setPokemonAbility] = useState([])
 
   // 🎁 Get pokemon list 🎁
   const getPokemonList = async () => {
-    let pokemonArray = [];
+    let pokemonArray = []
     for (let i = 1; i <= 200; i++)
-      pokemonArray.push(await getPokemonData(i));
-    setPokemonList(pokemonArray);
+      pokemonArray.push(await getPokemonData(i))
+    setPokemonList(pokemonArray)
   }
 
   const getPokemonData = async (id) => {
-    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    return (res.data);
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    return (res.data)
   }
 
   useEffect(() => {
-    getPokemonList();
+    getPokemonList()
   }, [])
 
   // 😘 Get pokemon when press Enter 😘
   const handleChange = (e) => {
-    setPokemon(e.target.value.toLowerCase());
-  };
+    setPokemon(e.target.value.toLowerCase())
+  }
 
   const getPokemon = async (event) => {
-    const toArray = [];
+    const toArray = []
     if (event.key === 'Enter') {
       try {
-        checkData(pokemon);
-        const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
-        const res = await axios.get(url);
-        const urlAbility = res.data.abilities[0].ability.url;
-        const resAbility = await axios.get(urlAbility);
-        setPokemonAbility(resAbility.data);
-        toArray.push(res.data);
-        setPokemonType(res.data.types[0].type.name);
-        setPokemonData(toArray);
+        checkData(pokemon)
+        const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+        const res = await axios.get(url)
+        const urlAbility = res.data.abilities[0].ability.url
+        const resAbility = await axios.get(urlAbility)
+        setPokemonAbility(resAbility.data)
+        toArray.push(res.data)
+        setPokemonType(res.data.types[0].type.name)
+        setPokemonData(toArray)
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     }
   };
@@ -57,7 +57,7 @@ const App = () => {
     let count = 0;
     pokemonList.map((data) => {
       if (pokemonCheck.toLowerCase() === data.name) {
-        count++;
+        count++
       }
     })
     if (count == 0) {
