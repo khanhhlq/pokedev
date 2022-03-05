@@ -52,6 +52,7 @@ const App = () => {
     }
   };
 
+  // 🔮 Check Data Pokemon When Search 🔮
   const checkData = (pokemonCheck) => {
     let count = 0;
     pokemonList.map((data) => {
