@@ -4,13 +4,14 @@ import axios from "axios";
 import StaticImages from "./components/StaticImages";
 
 const App = () => {
+  // 🎉 Create useState 🎉
   const [pokemon, setPokemon] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonData, setPokemonData] = useState([]);
   const [pokemonType, setPokemonType] = useState("");
   const [pokemonAbility, setPokemonAbility] = useState([]);
 
-  // Get pokemon list
+  // 🎁 Get pokemon list 🎁
   const getPokemonList = async () => {
     let pokemonArray = [];
     for (let i = 1; i <= 200; i++)
@@ -27,11 +28,7 @@ const App = () => {
     getPokemonList();
   }, [])
 
-  // const getPokemonFormList = (pokemonSelection) => {
-  //   return (setPokemon("arbok"))
-  // }
-
-  // Get pokemon when press Enter
+  // 😘 Get pokemon when press Enter 😘
   const handleChange = (e) => {
     setPokemon(e.target.value.toLowerCase());
   };
@@ -40,6 +37,7 @@ const App = () => {
     const toArray = [];
     if (event.key === 'Enter') {
       try {
+        checkData(pokemon);
         const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
         const res = await axios.get(url);
         const urlAbility = res.data.abilities[0].ability.url;
@@ -54,23 +52,17 @@ const App = () => {
     }
   };
 
-  const checkData = (pokemonInput) => {
-    let countCheck = 0;
+  const checkData = (pokemonCheck) => {
+    let count = 0;
     pokemonList.map((data) => {
-      if (pokemonInput == data) {
-        countCheck++;
-      }
-      else {
-        countCheck--;
+      if (pokemonCheck.toLowerCase() === data.name) {
+        count++;
       }
     })
-    if (countCheck > 0) {
-      alert("oke");
-    } else {
-      alert("not found")
+    if (count == 0) {
+      alert("Sorry bro! Not found pokemon. Try Again")
     }
   }
-
   return (
     <div className="container">
       <div className="left-screen">
@@ -89,7 +81,6 @@ const App = () => {
             </div>
             <div id="display" className="main-screen__display">
               {pokemonData[0] ? <div className="pokemon-image"> <img src={pokemonData[0].sprites["front_default"]} /></div> : <StaticImages />}
-              <div className="not-found-message">Pokemon <br />Not Found</div>
             </div>
             <div className="main-screen__speaker-light"></div>
             <div className="main-screen__speaker">
