@@ -37,7 +37,7 @@ function App() {
 
   const getPokemon = async (event) => {
     const toArray = [];
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       try {
         const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
         const res = await axios.get(url);
@@ -104,6 +104,9 @@ function App() {
             <input
               onChange={handleChange}
               onKeyPress={getPokemon}
+              onKeyUp={getPokemon}
+              onKeyDown={e => e.key === 'Enter' && getPokemon}
+              onPaste={getPokemon}
               id="search"
               type="text"
               className="awesomplete info-input"
@@ -137,19 +140,11 @@ function App() {
               </div>
               <div id="height" className="info">
                 <div className="label">Height</div>
-                {pokemonData.map((data) => {
-                  return (
-                    <div className="desc">0.{data.height}m</div>
-                  )
-                })}
+                {pokemonData[0] ? <div className="desc">0.{pokemonData[0].height}m</div> : "_____"}
               </div>
               <div id="weight" className="info">
                 <div className="label">Weight</div>
-                {pokemonData.map((data) => {
-                  return (
-                    <div className="desc">{Math.round(data.weight / 4.3)}lbs</div>
-                  )
-                })}
+                {pokemonData[0] ? <div className="desc">{Math.round(pokemonData[0].weight / 4.3)}lbs</div> : "_____"}
               </div>
               {/* <div id="evolution" className="info">
                 <div className="label">Evolution Chain</div>
@@ -157,11 +152,10 @@ function App() {
               </div> */}
               <div id="bio" className="info">
                 <div className="label">Bio</div>
-                <div className="desc">
-                  {pokemonAbility.effect_entries ? <div className="desc">{pokemonAbility.effect_entries[1].short_effect}</div> : null}
-                </div>
+                {pokemonAbility.effect_entries ? <div className="desc">{pokemonAbility.effect_entries[1].short_effect}</div> : "_____"}
               </div>
             </section>
+
           </div>
         </div>
       </div >
