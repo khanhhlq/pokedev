@@ -81,7 +81,7 @@ const App = () => {
             <div className="main-screen__top-lights">
             </div>
             <div id="display" className="main-screen__display">
-              {pokemonData[0] ? <div className="pokemon-image"> <img src={pokemonData[0].sprites["front_default"]} /></div> : <StaticImages />}
+              {pokemonData[0] ? <div className="pokemon-image"><img src={pokemonData[0].sprites["front_default"]} /></div> : <StaticImages />}
             </div>
             <div className="main-screen__speaker-light"></div>
             <div className="main-screen__speaker">
@@ -106,6 +106,7 @@ const App = () => {
         </div>
         <div className="right-screen__bottom">
           <div className="info-container">
+            <p style={{ color: "#fff" }}>Press enter to get the result</p>
             <input onChange={handleChange} onKeyPress={getPokemon} id="search" type="text" className="awesomplete info-input" placeholder="Search Pokemon Name" list="mylist" />
             <datalist id="mylist">
               {pokemonList.map((data) => {
