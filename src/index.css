@@ -213,7 +213,14 @@ body {
   background-position: center;
   /* background-image: url("https://i.imgur.com/zIxgrDd.png"); */
 }
-
+.container .left-screen__bottom .main-screen__display .pokemon-image-start {
+  width: 100%;
+  height: 100%;
+  background-size: 70% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("https://i.imgur.com/zIxgrDd.png");
+}
 .container .left-screen__bottom .main-screen__display .pokemon-image img {
   width: 250px;
 }

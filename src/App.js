@@ -70,11 +70,7 @@ function App() {
             <div className="main-screen__top-lights">
             </div>
             <div id="display" className="main-screen__display">
-              {pokemonData.map((data) => {
-                return (
-                  <div className="pokemon-image"> <img src={data.sprites["front_default"]} /></div>
-                )
-              })}
+              {pokemonData[0] ? <div className="pokemon-image"> <img src={pokemonData[0].sprites["front_default"]} /></div> : <div className="pokemon-image-start"> <img /></div>}
               <div className="search-message">Searching...</div>
               <div className="not-found-message">Pokemon <br />Not Found</div>
             </div>
@@ -113,7 +109,6 @@ function App() {
               placeholder="Search Pokemon Name or ID"
               list="mylist"
             />
-
             <datalist id="mylist">
               {pokemonList.map((data) => {
                 return (
@@ -124,19 +119,11 @@ function App() {
             <section className="info-screen">
               <div id="species" className="info">
                 <div className="label">Name</div>
-                {pokemonData.map((data) => {
-                  return (
-                    <div className="desc">{data.species.name}</div>
-                  )
-                })}
+                {pokemonData[0] ? <div className="desc">{pokemonData[0].species.name}</div> : "_____"}
               </div>
               <div id="type" className="info">
                 <div className="label">Type</div>
-                {pokemonData.map(() => {
-                  return (
-                    <div className="desc">{pokemonType}</div>
-                  )
-                })}
+                {pokemonData[0] ? <div className="desc">{pokemonType}</div> : "_____"}
               </div>
               <div id="height" className="info">
                 <div className="label">Height</div>
@@ -146,14 +133,15 @@ function App() {
                 <div className="label">Weight</div>
                 {pokemonData[0] ? <div className="desc">{Math.round(pokemonData[0].weight / 4.3)}lbs</div> : "_____"}
               </div>
-              {/* <div id="evolution" className="info">
-                <div className="label">Evolution Chain</div>
-                <div className="desc">____</div>
-              </div> */}
               <div id="bio" className="info">
                 <div className="label">Bio</div>
                 {pokemonAbility.effect_entries ? <div className="desc">{pokemonAbility.effect_entries[1].short_effect}</div> : "_____"}
               </div>
+              {/* Components will use in the future */}
+              {/* <div id="evolution" className="info">
+                <div className="label">Evolution Chain</div>
+                <div className="desc">____</div>
+              </div> */}
             </section>
 
           </div>
