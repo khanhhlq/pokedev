@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     getPokemonList()
-  }, [])
+  })
 
   const getPokemonData = async (id) => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
