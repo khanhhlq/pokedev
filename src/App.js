@@ -19,14 +19,14 @@ const App = () => {
     setPokemonList(pokemonArray)
   }
 
+  useEffect(() => {
+    getPokemonList()
+  }, [])
+
   const getPokemonData = async (id) => {
     const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
     return (res.data)
   }
-
-  useEffect(() => {
-    getPokemonList()
-  }, [])
 
   // 😘 Get pokemon when press Enter 😘
   const handleChange = (e) => setPokemon(e.target.value.toLowerCase())
@@ -62,6 +62,7 @@ const App = () => {
       ) {
         count++
       }
+      return count;
     })
     if (count === 0)
       alert("Sorry bro! Not found pokemon. Try Again")
@@ -84,7 +85,7 @@ const App = () => {
             <div className="main-screen__top-lights">
             </div>
             <div id="display" className="main-screen__display">
-              {pokemonData[0] ? <div className="pokemon-image"><img src={pokemonData[0].sprites["front_default"]} /></div> : <StaticImages />}
+              {pokemonData[0] ? <div className="pokemon-image"><img src={pokemonData[0].sprites["front_default"]} alt="Images Error" /></div> : <StaticImages />}
             </div>
             <div className="main-screen__speaker-light"></div>
             <div className="main-screen__speaker">
