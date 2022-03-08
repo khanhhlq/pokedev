@@ -56,7 +56,12 @@ const App = () => {
   const checkData = (pokemonCheck) => {
     let count = 0;
     pokemonList.map((data) => {
-      if (pokemonCheck.toLowerCase() === data.name || pokemonCheck.toLowerCase() === data.name.toLowerCase()) {
+      if (
+        pokemonCheck.toLowerCase() === data.name ||
+        pokemonCheck.toLowerCase() === data.name.toLowerCase() ||
+        pokemonCheck === data.name ||
+        pokemonCheck === data.name.toLowerCase()
+      ) {
         count++
       }
     })
