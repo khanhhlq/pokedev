@@ -59,9 +59,7 @@ const App = () => {
         pokemonCheck.toLowerCase() === data.name.toLowerCase() ||
         pokemonCheck === data.name ||
         pokemonCheck === data.name.toLowerCase()
-      ) {
-        count++
-      }
+      ) count++
       return count;
     })
     if (count === 0)
@@ -114,9 +112,7 @@ const App = () => {
             <input onChange={handleChange} onKeyPress={getPokemon} id="search" type="text" className="awesomplete info-input" placeholder="Search Pokemon Name" list="mylist" />
             <datalist id="mylist">
               {pokemonList.map((data) => {
-                return (
-                  <option>{data.name}</option>
-                )
+                return <option>{data.name}</option>
               })}
             </datalist>
             <section className="info-screen">
