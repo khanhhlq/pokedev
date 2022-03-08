@@ -29,9 +29,7 @@ const App = () => {
   }, [])
 
   // 😘 Get pokemon when press Enter 😘
-  const handleChange = (e) => {
-    setPokemon(e.target.value.toLowerCase())
-  }
+  const handleChange = (e) => setPokemon(e.target.value.toLowerCase())
 
   const getPokemon = async (event) => {
     const toArray = []
@@ -53,9 +51,9 @@ const App = () => {
   };
 
   // 🔮 Check Data Pokemon When Search 🔮
-  const checkData = (pokemonCheck) => {
+  const checkData = pokemonCheck => {
     let count = 0;
-    pokemonList.map((data) => {
+    pokemonList.map(data => {
       if (
         pokemonCheck.toLowerCase() === data.name ||
         pokemonCheck.toLowerCase() === data.name.toLowerCase() ||
@@ -65,10 +63,10 @@ const App = () => {
         count++
       }
     })
-    if (count == 0) {
+    if (count === 0)
       alert("Sorry bro! Not found pokemon. Try Again")
-    }
   }
+
   return (
     <div className="container">
       <div className="left-screen">
