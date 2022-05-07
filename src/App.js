@@ -58,7 +58,11 @@ const App = () => {
         pokemonCheck.toLowerCase() === data.name ||
         pokemonCheck.toLowerCase() === data.name.toLowerCase() ||
         pokemonCheck === data.name ||
-        pokemonCheck === data.name.toLowerCase()
+        pokemonCheck === data.name.toLowerCase() ||
+        data.name === pokemonCheck.toLowerCase() ||
+        data.name.toLowerCase() === pokemonCheck.toLowerCase() ||
+        data.name === pokemonCheck ||
+        data.name.toLowerCase() === pokemonCheck
       ) count++
       return count;
     })
@@ -83,7 +87,9 @@ const App = () => {
             <div className="main-screen__top-lights">
             </div>
             <div id="display" className="main-screen__display">
-              {pokemonData[0] ? <div className="pokemon-image"><img src={pokemonData[0].sprites["front_default"]} alt="Images Error" /></div> : <StaticImages />}
+              {/* {pokemonData[0] ? <div className="pokemon-image"><img src={pokemonData[0].sprites["front_default"]} alt="Images Error" /></div> : <StaticImages />} */}
+              {/* {pokemonData[0] ? <div className="pokemon-image"><img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`} alt="Images Error" /></div> : <StaticImages />} */}
+
             </div>
             <div className="main-screen__speaker-light"></div>
             <div className="main-screen__speaker">
