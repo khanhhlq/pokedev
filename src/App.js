@@ -9,6 +9,7 @@ const App = () => {
   const [pokemonList, setPokemonList] = useState([])
   const [pokemonData, setPokemonData] = useState([])
   const [pokemonType, setPokemonType] = useState("")
+  const [pokeId, setPokeId] = useState("")
   const [pokemonAbility, setPokemonAbility] = useState([])
 
   // 🎁 Get pokemon list 🎁
@@ -35,11 +36,12 @@ const App = () => {
     const toArray = []
     if (event.key === 'Enter') {
       try {
-        checkData(pokemon)
+        checkData(pokemon.toLowerCase())
         const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
         const res = await axios.get(url)
         const urlAbility = res.data.abilities[0].ability.url
         const resAbility = await axios.get(urlAbility)
+        setPokeId(res.data.id)
         setPokemonAbility(resAbility.data)
         toArray.push(res.data)
         setPokemonType(res.data.types[0].type.name)
@@ -55,14 +57,8 @@ const App = () => {
     let count = 0;
     pokemonList.map(data => {
       if (
-        pokemonCheck.toLowerCase() === data.name ||
-        pokemonCheck.toLowerCase() === data.name.toLowerCase() ||
-        pokemonCheck === data.name ||
-        pokemonCheck === data.name.toLowerCase() ||
-        data.name === pokemonCheck.toLowerCase() ||
-        data.name.toLowerCase() === pokemonCheck.toLowerCase() ||
-        data.name === pokemonCheck ||
-        data.name.toLowerCase() === pokemonCheck
+        pokemonCheck === "" ||
+        pokemonCheck === data.name
       ) count++
       return count;
     })
@@ -88,7 +84,7 @@ const App = () => {
             </div>
             <div id="display" className="main-screen__display">
               {/* {pokemonData[0] ? <div className="pokemon-image"><img src={pokemonData[0].sprites["front_default"]} alt="Images Error" /></div> : <StaticImages />} */}
-              {/* {pokemonData[0] ? <div className="pokemon-image"><img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`} alt="Images Error" /></div> : <StaticImages />} */}
+              {pokemonData[0] ? <div className="pokemon-image"><img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokeId}.gif`} alt="Images Error" /></div> : <StaticImages />}
 
             </div>
             <div className="main-screen__speaker-light"></div>
